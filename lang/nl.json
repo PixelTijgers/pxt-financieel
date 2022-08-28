@@ -96,6 +96,14 @@
     "Content Introduction Fiscal Year": "Je kunt fiscaal jaren toevoegen of wijzigen.",
     "Fiscal Year Select": "Selecteer fiscaal jaar",
 
+    "Payment Type": "Type betaling",
+    "Payment Types": "Type betalingen",
+    "Payment Type Introduction": "Een overzicht van alle type betalingen jaren.",
+    "Payment Type Introduction Add": "Voeg een type betaling jaar toe.",
+    "Payment Type Introduction Edit": "Wijzig de type betaling jaar.",
+    "Content Introduction Payment Type": "Je kunt type betalingen toevoegen of wijzigen.",
+    "Payment Type Select": "Selecteer een type betaling",
+
     "Team": "Team",
     "Teams": "Teams",
     "Team Introduction": "Een overzicht met alle teams.",

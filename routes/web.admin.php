@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\Modules\InvoiceController;
 use App\Http\Controllers\Admin\Modules\MemberController;
 use App\Http\Controllers\Admin\Modules\MembershipController;
 use App\Http\Controllers\Admin\Modules\PageController;
+use App\Http\Controllers\Admin\Modules\PaymentTypeController;
 use App\Http\Controllers\Admin\Modules\PostController;
 use App\Http\Controllers\Admin\Modules\SocialController;
 use App\Http\Controllers\Admin\Modules\SponsorController;
@@ -110,6 +111,9 @@ Route::middleware(['auth:sanctum', 'verified', 'admin.permission'])->prefix('adm
 
         // Init fiscal year route(s).
         Route::resource('fiscal-years', FiscalYearController::class, ['names' => 'fiscal-year']);
+
+        // Init payemnt route(s).
+        Route::resource('payment-types', PaymentTypeController::class, ['names' => 'payment-types']);
 
         // Init administrators route(s).
         Route::resource('administrators', AdministratorController::class, ['names' => 'administrator']);

@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
             BankaccountTypeSeeder::class,
             BankaccountSeeder::class,
             AdministratorBankaccountSeeder::class,
+            PaymentTypeSeeder::class,
         ]);
 
         // Only run factories on local or staging env.

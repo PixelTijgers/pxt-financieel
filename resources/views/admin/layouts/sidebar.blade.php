@@ -52,6 +52,16 @@
 
             @endcan
 
+            @can('modules.paymenttype.index')
+
+                <li class="nav-item {{ active(['*/payment-types', '*/payment-types/*']) }}">
+                    <a href="{{ url('/admin/modules/payment-types') }}" class="nav-link">
+                        <i class="link-icon fa-regular fa-arrow-down-a-z"></i><span class="link-title">{{ __('Payment Types') }}</span>
+                    </a>
+                </li>
+
+            @endcan
+
             @can('modules.page.index')
 
                 <li class="nav-item {{ active(['*/pages', '*/pages/*']) }}">
