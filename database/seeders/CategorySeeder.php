@@ -21,13 +21,67 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             [
-                'name' => 'Expertises',
+                'name' => 'Hypotheek',
             ],
             [
-                'name' => 'Blog',
+                'name' => 'Water',
             ],
             [
-                'name' => 'Case',
+                'name' => 'Gas en elektra',
+            ],
+            [
+                'name' => 'Boodschappen',
+            ],
+            [
+                'name' => 'Verzekeringen',
+            ],
+            [
+                'name' => 'Telefonie',
+            ],
+            [
+                'name' => 'Internet',
+            ],
+            [
+                'name' => 'Belastingen',
+            ],
+            [
+                'name' => 'Kinderopvang',
+            ],
+            [
+                'name' => 'Marktplaats',
+            ],
+            [
+                'name' => 'Bol.com',
+            ],
+            [
+                'name' => 'Online aankoop',
+            ],
+            [
+                'name' => 'Overboeking tussen rekeningen',
+            ],
+            [
+                'name' => 'Hello Fresh',
+            ],
+            [
+                'name' => 'Benzine',
+            ],
+            [
+                'name' => 'Kleding',
+            ],
+            [
+                'name' => 'Horeca',
+            ],
+            [
+                'name' => 'Efteling',
+            ],
+            [
+                'name' => 'Abonnementen',
+            ],
+            [
+                'name' => 'Overige betalingen',
+            ],
+            [
+                'name' => 'Kinderen',
             ],
         ];
 

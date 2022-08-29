@@ -104,6 +104,14 @@
     "Content Introduction Payment Type": "Je kunt type betalingen toevoegen of wijzigen.",
     "Payment Type Select": "Selecteer een type betaling",
 
+    "Payment": "Betaling",
+    "Payments": "Betalingen",
+    "Payment Introduction": "Een overzicht van alle betalingen jaren.",
+    "Payment Introduction Add": "Voeg een betaling jaar toe.",
+    "Payment pe Introduction Edit": "Wijzig de betaling jaar.",
+    "Content Introduction Payment": "Je kunt betalingen toevoegen of wijzigen.",
+    "Payment Select": "Selecteer een betaling",
+
     "Team": "Team",
     "Teams": "Teams",
     "Team Introduction": "Een overzicht met alle teams.",
@@ -173,6 +181,7 @@
     "Author Select": "Selecteer auteur",
     "Away": "Uit",
     "Back To Login": "Terug naar login pagina",
+    "Balance": "Balans",
     "Bank": "Rekeningnummer",
     "Birthday": "Geboortedatum",
     "Boardmember": "Bestuurslid",

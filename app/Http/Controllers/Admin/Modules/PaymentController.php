@@ -9,16 +9,16 @@ use Yajra\Datatables\Datatables;
 use Yajra\DataTables\Html\Builder;
 
 // Models.
-use App\Models\Bankaccount;
+use App\Models\Payment;
 
 // Request
-use App\Http\Requests\BankaccountRequest;
+use App\Http\Requests\PaymentRequest;
 
 // Traits
 use App\Traits\DataTableActionsTrait;
 use App\Traits\HasRightsTrait;
 
-class BankaccountController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Traits
@@ -36,16 +36,13 @@ class BankaccountController extends Controller
     {
         // Init datatables.
         if (request()->ajax()) {
-            return DataTables::of(Bankaccount::query()->with(['bankaccount_types']))
-            ->editColumn('balance', function(Bankaccount $bankaccount) {
-                return '€ ' . number_format($bankaccount->balance, 2, ',', '.');
-            })
-            ->addColumn('action', function (Bankaccount $bankaccount) {
+            return DataTables::of(Payment::query())
+            ->addColumn('action', function (Payment $payment) {
                 return
                     '<div class="d-flex">' .
-                        $this->setAction('bankaccount.index', $bankaccount, 'view', 'bankaccounts', false) .
-                        $this->setAction('bankaccount.edit', $bankaccount, 'update', 'bankaccounts') .
-                        $this->setAction('bankaccount.destroy', $bankaccount, 'destroy', 'bankaccounts') .
+                        $this->setAction('payment.index', $payment, 'view', 'payments', false) .
+                        $this->setAction('payment.edit', $payment, 'update', 'payments') .
+                        $this->setAction('payment.destroy', $payment, 'destroy', 'payments') .
                     '</div>';
             })
             ->make(true);
@@ -54,20 +51,8 @@ class BankaccountController extends Controller
         // Set values.
         $html = $builder
                     ->addColumn([
-                        'title' => __('Bankaccount'),
-                        'data' => 'accountnumber'
-                    ])
-                    ->addColumn([
                         'title' => __('Name'),
                         'data' => 'name'
-                    ])
-                    ->addColumn([
-                        'title' => __('Bankaccount Type'),
-                        'data' => 'bankaccount_types.name'
-                    ])
-                    ->addColumn([
-                        'title' => __('Balance'),
-                        'data' => 'balance'
                     ])
                     ->addAction([
                         'title' => __('Actions'),
@@ -79,7 +64,7 @@ class BankaccountController extends Controller
                     ]);
 
         // Init view.
-        return view('admin.modules.bankaccount.index', compact('html'));
+        return view('admin.modules.payment.index', compact('html'));
     }
 
     /**
@@ -90,7 +75,7 @@ class BankaccountController extends Controller
     public function create()
     {
         // Init view.
-        return view('admin.modules.bankaccount.createEdit');
+        return view('admin.modules.payment.createEdit');
     }
 
     /**
@@ -99,13 +84,13 @@ class BankaccountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BankaccountRequest $request)
+    public function store(PaymentRequest $request)
     {
         // Post data to database.
-        Bankaccount::Create($request->validated());
+        Payment::Create($request->validated());
 
         // Return back with message.
-        return redirect()->route('bankaccount.index')->with([
+        return redirect()->route('payment.index')->with([
                 'type' => 'success',
                 'message' => __('Alert Add')
             ]
@@ -115,32 +100,32 @@ class BankaccountController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Bankaccount  $bankaccount
+     * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Bankaccount $bankaccount)
+    public function edit(Payment $payment)
     {
         // Init view.
-        return view('admin.modules.bankaccount.createEdit', compact('bankaccount'));
+        return view('admin.modules.payment.createEdit', compact('payment'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Bankaccount  $bankaccount
+     * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function update(BankaccountRequest $request, Bankaccount $bankaccount)
+    public function update(PaymentRequest $request, Payment $payment)
     {
         // Set data to save into database.
-        $bankaccount->update($request->validated());
+        $payment->update($request->validated());
 
         // Save data.
-        $bankaccount->save();
+        $payment->save();
 
         // Return back with message.
-        return redirect()->route('bankaccount.index')->with([
+        return redirect()->route('payment.index')->with([
                 'type' => 'success',
                 'message' => __('Alert Edit')
             ]
@@ -150,13 +135,13 @@ class BankaccountController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $bankaccount
+     * @param  int  $payment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Bankaccount $bankaccount)
+    public function destroy(Payment $payment)
     {
         // Delete the model.
-        $bankaccount->delete();
+        $payment->delete();
 
         // Return back with message.
         return redirect()->back()->with([

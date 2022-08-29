@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             // Menu\StandAloneSeeder::class,
 
             // Website seeders.
-            // CategorySeeder::class,
+            CategorySeeder::class,
             // DetailsSeeder::class,
             LocaleSeeder::class,
             //PageSliderSeeder::class,

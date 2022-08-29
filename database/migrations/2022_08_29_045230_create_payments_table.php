@@ -1,6 +1,5 @@
 <?php
 
-// Facades.
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,20 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bankaccounts', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             // Generate ID.
             $table->id();
 
             // Relations.
-            $table->bigInteger('bankaccount_type_id')->unsigned()->index();
-            $table->foreign('bankaccount_type_id')->references('id')->on('bankaccount_types')->onDelete('cascade');
+            $table->bigInteger('payment_type_id')->unsigned()->index();
+            $table->foreign('payment_type_id')->references('id')->on('payment_types')->onDelete('cascade');
 
             // Table content.
             $table->string('name');
-            $table->string('accountnumber')->unique();
-            $table->decimal('balance', 9, 3)->default(0);
 
-            // Generate timestaps (created_at, updated_at).
+            // Generate timestamps (created_at, updated_at)
             $table->timestamps();
         });
     }
@@ -39,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bankaccounts');
+        Schema::dropIfExists('payments');
     }
 };

@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\Modules\InvoiceController;
 use App\Http\Controllers\Admin\Modules\MemberController;
 use App\Http\Controllers\Admin\Modules\MembershipController;
 use App\Http\Controllers\Admin\Modules\PageController;
+use App\Http\Controllers\Admin\Modules\PaymentController;
 use App\Http\Controllers\Admin\Modules\PaymentTypeController;
 use App\Http\Controllers\Admin\Modules\PostController;
 use App\Http\Controllers\Admin\Modules\SocialController;
@@ -63,7 +64,7 @@ Route::middleware(['auth:sanctum', 'verified', 'admin.permission'])->prefix('adm
         // Route::resource('posts', PostController::class, ['names' => 'post']);
 
         // Init categories  route(s).
-        // Route::resource('categories', CategoryController::class, ['names' => 'category']);
+        Route::resource('categories', CategoryController::class, ['names' => 'category']);
 
         // Init calendar route(s).
         // Route::resource('calendar', CalendarController::class, ['names' => 'calendar']);
@@ -113,6 +114,7 @@ Route::middleware(['auth:sanctum', 'verified', 'admin.permission'])->prefix('adm
         Route::resource('fiscal-years', FiscalYearController::class, ['names' => 'fiscal-year']);
 
         // Init payemnt route(s).
+        Route::resource('payments', PaymentController::class, ['names' => 'payment']);
         Route::resource('payment-types', PaymentTypeController::class, ['names' => 'payment-types']);
 
         // Init administrators route(s).

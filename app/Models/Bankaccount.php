@@ -56,7 +56,7 @@ class Bankaccount extends Model
      */
     public function bankaccount_types()
     {
-        return $this->belongsTo(\App\Models\BankaccountType::class, 'bankaccount_types_id');
+        return $this->belongsTo(\App\Models\BankaccountType::class, 'bankaccount_type_id');
     }
 
     public function administrator_bankaccounts()

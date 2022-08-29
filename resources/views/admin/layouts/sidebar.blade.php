@@ -34,7 +34,7 @@
 
             @can('modules.bankaccount.index')
 
-                <li class="nav-item {{ active(['*/bankaccounts', '*/fbankaccounts/*']) }}">
+                <li class="nav-item {{ active(['*/bankaccounts', '*/bankaccounts/*']) }}">
                     <a href="{{ url('/admin/modules/bankaccounts') }}" class="nav-link">
                         <i class="link-icon fa-regular fa-money-check-dollar"></i><span class="link-title">{{ __('Bankaccounts') }}</span>
                     </a>
@@ -42,11 +42,11 @@
 
             @endcan
 
-            @can('modules.fiscalyear.index')
+            @can('modules.payment.index')
 
-                <li class="nav-item {{ active(['*/fiscal-years', '*/fiscal-years/*']) }}">
-                    <a href="{{ url('/admin/modules/fiscal-years') }}" class="nav-link">
-                        <i class="link-icon fa-regular fa-calendar-days"></i><span class="link-title">{{ __('Fiscal Year') }}</span>
+                <li class="nav-item {{ active(['*/payments', '*/payments/*']) }}">
+                    <a href="{{ url('/admin/modules/payments') }}" class="nav-link">
+                        <i class="link-icon fa-regular fa-receipt"></i><span class="link-title">{{ __('Payments') }}</span>
                     </a>
                 </li>
 
@@ -67,6 +67,26 @@
                 <li class="nav-item {{ active(['*/pages', '*/pages/*']) }}">
                     <a href="{{ url('/admin/modules/pages') }}" class="nav-link">
                         <i class="link-icon fa-regular fa-browsers"></i><span class="link-title">{{ __('Pages') }}</span>
+                    </a>
+                </li>
+
+            @endcan
+
+            @can('modules.category.index')
+
+                <li class="nav-item {{ active(['*/categories', '*/categories/*']) }}">
+                    <a href="{{ url('/admin/modules/categories') }}" class="nav-link">
+                        <i class="link-icon fa-regular fa-rectangle-list"></i><span class="link-title">{{ __('Categories') }}</span>
+                    </a>
+                </li>
+
+            @endcan
+
+            @can('modules.fiscalyear.index')
+
+                <li class="nav-item {{ active(['*/fiscal-years', '*/fiscal-years/*']) }}">
+                    <a href="{{ url('/admin/modules/fiscal-years') }}" class="nav-link">
+                        <i class="link-icon fa-regular fa-calendar-days"></i><span class="link-title">{{ __('Fiscal Year') }}</span>
                     </a>
                 </li>
 
