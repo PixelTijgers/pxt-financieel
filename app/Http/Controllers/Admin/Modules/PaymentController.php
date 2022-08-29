@@ -9,6 +9,7 @@ use Yajra\Datatables\Datatables;
 use Yajra\DataTables\Html\Builder;
 
 // Models.
+use App\Models\FiscalYear;
 use App\Models\Payment;
 
 // Request
@@ -51,8 +52,8 @@ class PaymentController extends Controller
         // Set values.
         $html = $builder
                     ->addColumn([
-                        'title' => __('Name'),
-                        'data' => 'name'
+                        'title' => __('Company'),
+                        'data' => 'company'
                     ])
                     ->addAction([
                         'title' => __('Actions'),
@@ -86,8 +87,13 @@ class PaymentController extends Controller
      */
     public function store(PaymentRequest $request)
     {
+        // Get the selected season.
+        $getFiscalYear = FiscalYear::where('year', session()->get('fiscal_year'))->first();
+
         // Post data to database.
-        Payment::Create($request->validated());
+        Payment::Create([
+            'fiscal_year_id' => $getFiscalYear->id
+        ] + $request->validated());
 
         // Return back with message.
         return redirect()->route('payment.index')->with([

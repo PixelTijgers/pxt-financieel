@@ -47,13 +47,52 @@
 
                             <div class="col-md-12">
 
+                                <x-form.select
+                                    name="payment_type_id"
+                                    :label="__('Payment Type')"
+                                    :cols="['col-2', 'col-3']"
+                                    :value="(old('payment_type_id') ? old('payment_type_id') : (@$payment ? $payment->payment_type_id : null))"
+                                    :options="\App\Models\PaymentType::all()->sortBy('name')"
+                                    :valueWrapper="['id', 'name']"
+                                    :disabledOption="__('Payment Type Select')"
+                                    :row="true"
+                                />
+
+                                <x-form.select
+                                    name="category_id"
+                                    :label="__('Category')"
+                                    :cols="['col-2', 'col-3']"
+                                    :value="(old('category_id') ? old('category_id') : (@$payment ? $payment->category_id : null))"
+                                    :options="\App\Models\Category::all()->sortBy('name')"
+                                    :valueWrapper="['id', 'name']"
+                                    :disabledOption="__('Category Select')"
+                                    :row="true"
+                                />
+
+                                <x-form.date
+                                    name="payment_date"
+                                    :label="__('Payment Date')"
+                                    :value="(old('payment_date') ? old('payment_date') : (@$payment ? $payment->payment_date : null))"
+                                    :row="true"
+                                    :cols="['col-2', 'col-3']"
+                                />
+
                                 <x-form.input
                                     type="text"
-                                    name="name"
-                                    :label="__('Name')"
-                                    :value="(old('name') ? old('name') : (@$payment ? $payment->name : null))"
+                                    name="company"
+                                    :label="__('Company')"
+                                    :value="(old('company') ? old('company') : (@$payment ? $payment->company : null))"
                                     :row="true"
-                                    :cols="['col-2', 'col-10']"
+                                    :cols="['col-2', 'col-6']"
+                                />
+
+                                <x-form.input
+                                    type="text"
+                                    name="payment_reference"
+                                    :label="__('Payment Reference')"
+                                    :value="(old('payment_reference') ? old('payment_reference') : (@$payment ? $payment->payment_reference : null))"
+                                    :row="true"
+                                    :cols="['col-2', 'col-6']"
                                 />
 
                             </div>

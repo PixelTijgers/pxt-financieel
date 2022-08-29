@@ -18,11 +18,19 @@ return new class extends Migration
             $table->id();
 
             // Relations.
+            $table->bigInteger('fiscal_year_id')->unsigned()->index();
+            $table->foreign('fiscal_year_id')->references('id')->on('fiscal_years')->onDelete('cascade');
+
             $table->bigInteger('payment_type_id')->unsigned()->index();
             $table->foreign('payment_type_id')->references('id')->on('payment_types')->onDelete('cascade');
 
+            $table->bigInteger('category_id')->unsigned()->index();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+
             // Table content.
-            $table->string('name');
+            $table->string('company')->nullable();
+            $table->string('payment_reference')->nullable()->unique();
+            $table->date('payment_date');
 
             // Generate timestamps (created_at, updated_at)
             $table->timestamps();
