@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
             // SocialMediaSeeder::class,
             // SocialSeeder::class,
 
+            CompanySeeder::class,
             BankaccountTypeSeeder::class,
             BankaccountSeeder::class,
             AdministratorBankaccountSeeder::class,

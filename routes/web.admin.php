@@ -9,10 +9,12 @@ use App\Http\Controllers\Admin\Modules\BankaccountController;
 use App\Http\Controllers\Admin\Modules\BoardController;
 use App\Http\Controllers\Admin\Modules\CalendarController;
 use App\Http\Controllers\Admin\Modules\CategoryController;
+use App\Http\Controllers\Admin\Modules\CompanyController;
 use App\Http\Controllers\Admin\Modules\ClientController;
 use App\Http\Controllers\Admin\Modules\DashboardController;
 use App\Http\Controllers\Admin\Modules\DetailController;
 use App\Http\Controllers\Admin\Modules\FiscalYearController;
+use App\Http\Controllers\Admin\Modules\FixedCostController;
 use App\Http\Controllers\Admin\Modules\GameController;
 use App\Http\Controllers\Admin\Modules\InvoiceController;
 use App\Http\Controllers\Admin\Modules\MemberController;
@@ -113,9 +115,15 @@ Route::middleware(['auth:sanctum', 'verified', 'admin.permission'])->prefix('adm
         // Init fiscal year route(s).
         Route::resource('fiscal-years', FiscalYearController::class, ['names' => 'fiscal-year']);
 
-        // Init payemnt route(s).
+        // Init payment route(s).
         Route::resource('payments', PaymentController::class, ['names' => 'payment']);
         Route::resource('payment-types', PaymentTypeController::class, ['names' => 'payment-types']);
+
+        // Init fixed costs route(s).
+        Route::resource('fixed-costs', FixedCostController::class, ['names' => 'fixed-costs']);
+
+        // Init company route(s).
+        Route::resource('companies', CompanyController::class, ['names' => 'company']);
 
         // Init administrators route(s).
         Route::resource('administrators', AdministratorController::class, ['names' => 'administrator']);

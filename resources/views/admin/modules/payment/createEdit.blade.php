@@ -69,6 +69,15 @@
                                     :row="true"
                                 />
 
+                                <x-form.input
+                                    type="text"
+                                    name="balance"
+                                    :label="__('Payment Cost')"
+                                    :value="(old('balance') ? old('balance') : (@$payment ? $payment->balance : null))"
+                                    :row="true"
+                                    :cols="['col-2', 'col-2']"
+                                />
+
                                 <x-form.date
                                     name="payment_date"
                                     :label="__('Payment Date')"
@@ -77,13 +86,15 @@
                                     :cols="['col-2', 'col-3']"
                                 />
 
-                                <x-form.input
-                                    type="text"
-                                    name="company"
+                                <x-form.select
+                                    name="company_id"
                                     :label="__('Company')"
-                                    :value="(old('company') ? old('company') : (@$payment ? $payment->company : null))"
+                                    :cols="['col-2', 'col-3']"
+                                    :value="(old('company_id') ? old('company_id') : (@$payment ? $payment->company_id : null))"
+                                    :options="\App\Models\Company::all()->sortBy('name')"
+                                    :valueWrapper="['id', 'name']"
+                                    :disabledOption="__('Company Select')"
                                     :row="true"
-                                    :cols="['col-2', 'col-6']"
                                 />
 
                                 <x-form.input

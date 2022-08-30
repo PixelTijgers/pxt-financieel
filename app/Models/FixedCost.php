@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
 
 // Scopes.
-use App\Scopes\AdministratorPaymentScope;
+use App\Scopes\AdministratorFixedCostScope;
 
-class Payment extends Model
+class FixedCost extends Model
 {
     /**
      * Traits
@@ -37,12 +37,10 @@ class Payment extends Model
      */
     protected $fillable = [
         'fiscal_year_id',
-        'payment_type_id',
         'category_id',
         'company_id',
         'balance',
         'payment_date',
-        'payment_reference'
     ];
 
     /**
@@ -52,7 +50,6 @@ class Payment extends Model
      */
     protected $casts = [
         'fiscal_year_id' => 'integer',
-        'payment_type_id' => 'integer',
         'category_id' => 'integer',
         'company_id' => 'integer',
         'balance' => 'float',
@@ -78,10 +75,6 @@ class Payment extends Model
     {
         return $this->belongsTo(\App\Models\FiscalYear::class, 'fiscal_year_id');
     }
-    public function payment_type()
-    {
-        return $this->belongsTo(\App\Models\PaymentType::class, 'payment_type_id');
-    }
 
     public function category()
     {
@@ -93,8 +86,8 @@ class Payment extends Model
         return $this->belongsTo(\App\Models\Company::class);
     }
 
-    public function administrator_payments()
+    public function administrator_fixed_cost()
     {
-        return $this->belongsToMany(\App\Models\AdministratorPayment::class)->withPivot('admin_id');
+        return $this->belongsToMany(\App\Models\AdministratorFixedCost::class)->withPivot('admin_id');
     }
 }

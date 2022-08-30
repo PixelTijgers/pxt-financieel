@@ -28,7 +28,8 @@ class PaymentRequest extends FormRequest
         return [
             'category_id'           => 'required|numeric|min:1',
             'payment_type_id'       => 'required|numeric|min:1',
-            'company'               => 'required|string|max:255',
+            'company_id'            => 'required|numeric|min:1',
+            'balance'               => 'required|between:0,9999999.99',
             'payment_reference'     => 'required|string|max:255',
             'payment_date'          => 'required|string|max:255',
         ];
@@ -43,6 +44,7 @@ class PaymentRequest extends FormRequest
     {
         // Merge into request.
         $this->merge([
+            'balance'           => (float)$this->balance,
             'payment_date'      => \Carbon\Carbon::createFromFormat('d-m-Y', $this->payment_date)->toDateTimeString(),
         ]);
     }

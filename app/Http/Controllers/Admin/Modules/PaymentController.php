@@ -38,7 +38,10 @@ class PaymentController extends Controller
     {
         // Init datatables.
         if (request()->ajax()) {
-            return DataTables::of(Payment::query())
+            return DataTables::of(Payment::query()->with(['payment_type','category','company']))
+            ->editColumn('balance', function(Payment $payment) {
+                return '€ ' . number_format($payment->balance, 2, ',', '.');
+            })
             ->addColumn('action', function (Payment $payment) {
                 return
                     '<div class="d-flex">' .
@@ -53,8 +56,24 @@ class PaymentController extends Controller
         // Set values.
         $html = $builder
                     ->addColumn([
+                        'title' => __('Payment Cost'),
+                        'data' => 'balance'
+                    ])
+                    ->addColumn([
+                        'title' => __('Payment Reference'),
+                        'data' => 'payment_reference'
+                    ])
+                    ->addColumn([
+                        'title' => __('Category'),
+                        'data' => 'category.name'
+                    ])
+                    ->addColumn([
                         'title' => __('Company'),
-                        'data' => 'company'
+                        'data' => 'company.name'
+                    ])
+                    ->addColumn([
+                        'title' => __('Payment Type'),
+                        'data' => 'payment_type.name'
                     ])
                     ->addAction([
                         'title' => __('Actions'),

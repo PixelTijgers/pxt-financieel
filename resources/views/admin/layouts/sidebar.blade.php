@@ -42,6 +42,16 @@
 
             @endcan
 
+            @can('modules.fixedcost.index')
+
+                <li class="nav-item {{ active(['*/fixed-costs', '*/fixed-costs/*']) }}">
+                    <a href="{{ url('/admin/modules/fixed-costs') }}" class="nav-link">
+                        <i class="link-icon fa-regular fa-file-invoice"></i><span class="link-title">{{ __('Fixed Costs') }}</span>
+                    </a>
+                </li>
+
+            @endcan
+
             @can('modules.payment.index')
 
                 <li class="nav-item {{ active(['*/payments', '*/payments/*']) }}">
@@ -77,6 +87,16 @@
                 <li class="nav-item {{ active(['*/categories', '*/categories/*']) }}">
                     <a href="{{ url('/admin/modules/categories') }}" class="nav-link">
                         <i class="link-icon fa-regular fa-rectangle-list"></i><span class="link-title">{{ __('Categories') }}</span>
+                    </a>
+                </li>
+
+            @endcan
+
+            @can('modules.company.index')
+
+                <li class="nav-item {{ active(['*/companies', '*/companies/*']) }}">
+                    <a href="{{ url('/admin/modules/companies') }}" class="nav-link">
+                        <i class="link-icon fa-regular fa-buildings"></i><span class="link-title">{{ __('Companies') }}</span>
                     </a>
                 </li>
 
