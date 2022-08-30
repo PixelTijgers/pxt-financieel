@@ -9,6 +9,7 @@ use Yajra\Datatables\Datatables;
 use Yajra\DataTables\Html\Builder;
 
 // Models.
+use App\Models\AdministratorPayment;
 use App\Models\FiscalYear;
 use App\Models\Payment;
 
@@ -91,10 +92,15 @@ class PaymentController extends Controller
         $getFiscalYear = FiscalYear::where('year', session()->get('fiscal_year'))->first();
 
         // Post data to database.
-        Payment::Create([
+        $payment = Payment::Create([
             'fiscal_year_id' => $getFiscalYear->id
         ] + $request->validated());
 
+        // Add data to the database.
+        AdministratorPayment::Create([
+            'admin_id' => auth()->user()->id,
+            'payment_id' => $payment->id,
+        ]);
         // Return back with message.
         return redirect()->route('payment.index')->with([
                 'type' => 'success',

@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 // Traits.
 use Spatie\Permission\Traits\HasRoles;
 
+// Scopes.
+use App\Scopes\AdministratorPaymentScope;
+
 class Payment extends Model
 {
     /**
@@ -16,6 +19,16 @@ class Payment extends Model
      *
      */
     use HasRoles;
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        return static::addGlobalScope(new AdministratorPaymentScope);
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -70,5 +83,10 @@ class Payment extends Model
     public function category()
     {
         return $this->belongsTo(\App\Models\Category::class);
+    }
+
+    public function administrator_payments()
+    {
+        return $this->belongsToMany(\App\Models\AdministratorPayment::class)->withPivot('admin_id');
     }
 }

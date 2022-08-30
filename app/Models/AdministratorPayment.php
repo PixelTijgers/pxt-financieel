@@ -7,7 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AdministratorBankaccount extends Model
+class AdministratorPayment extends Model
 {
     /**
     * Traits
@@ -26,7 +26,7 @@ class AdministratorBankaccount extends Model
      *
      * @var string
      */
-    protected $table = 'administrator_bankaccount';
+    protected $table = 'administrator_payment';
 
     /**
      * The attributes that are mass assignable.
@@ -35,7 +35,7 @@ class AdministratorBankaccount extends Model
      */
     protected $fillable = [
         'admin_id',
-        'bankaccount_id'
+        'payment_id'
     ];
 
     /**
@@ -45,6 +45,6 @@ class AdministratorBankaccount extends Model
      */
     protected $casts = [
         'admin_id' => 'integer',
-        'bankaccount_id' => 'integer',
+        'payment_id' => 'integer',
     ];
 }

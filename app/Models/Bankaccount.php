@@ -39,6 +39,7 @@ class Bankaccount extends Model
         'bankaccount_types_id',
         'name',
         'accountnumber'
+        'balance',
     ];
 
     /**
@@ -48,6 +49,7 @@ class Bankaccount extends Model
      */
     protected $casts = [
         'bankaccount_types_id' => 'integer',
+        'balance' => 'float'
     ];
 
     /**

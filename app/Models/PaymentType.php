@@ -17,6 +17,8 @@ class PaymentType extends Model
      */
     use HasRoles;
 
+
+
     /**
      * The attributes that are mass assignable.
      *
