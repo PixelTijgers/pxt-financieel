@@ -36,10 +36,11 @@ class Bankaccount extends Model
      * @var string[]
      */
     protected $fillable = [
-        'bankaccount_types_id',
+        'bankaccount_type_id',
         'name',
         'accountnumber',
         'balance',
+        'is_shared',
     ];
 
     /**
@@ -49,7 +50,8 @@ class Bankaccount extends Model
      */
     protected $casts = [
         'bankaccount_types_id' => 'integer',
-        'balance' => 'float'
+        'balance' => 'float',
+        'is_shared' => 'integer',
     ];
 
     /**

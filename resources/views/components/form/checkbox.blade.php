@@ -24,7 +24,13 @@
                         id="{{ @$id ? $id : $name }}"
                         class="form-check-input {{ @$class }} @error($name) border-danger @enderror"
                         value="{{ $key }}"
-                        {{ (old(str_replace(array('[', ']'), '' , $name)) !== null ? (in_array($key, old(str_replace(array('[', ']'), '' , $name))) ? 'checked' : null) : ($values !== null && in_array($key, array_column($values->toArray(), 'id')) ? ' checked' : null)) }}
+                        @if($name === 'is_shared')
+                            @if($values === 1)
+                                {{ 'checked' }}
+                            @endif
+                        @else
+                            {{ (old(str_replace(array('[', ']'), '' , $name)) !== null ? (in_array($key, old(str_replace(array('[', ']'), '' , $name))) ? 'checked' : null) : ($values !== null && in_array($key, array_column($values->toArray(), 'id')) ? ' checked' : null)) }}
+                        @endif
                     />
                     {{ (@$optionsTranslated === true ? __($option) : $option) }}
 

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('accountnumber')->unique();
             $table->decimal('balance', 9, 3)->default(0);
+            $table->integer('is_shared')->unsigned()->default(0);
 
             // Generate timestaps (created_at, updated_at).
             $table->timestamps();

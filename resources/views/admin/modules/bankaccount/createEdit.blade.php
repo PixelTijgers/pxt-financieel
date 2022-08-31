@@ -77,6 +77,18 @@
                                     :cols="['col-2', 'col-3']"
                                 />
 
+                                <x-form.checkbox
+                                    name="is_shared"
+                                    :label="'Gedeelde rekening'"
+                                    :values="(@$bankaccount ? $bankaccount->is_shared : null)"
+                                    :options="[
+                                        1 => ''
+                                    ]"
+                                    :optionsTranslated="true"
+                                    :row="true"
+                                    :cols="['col-2', 'col-3']"
+                                />
+
                             </div>
 
                         </div>

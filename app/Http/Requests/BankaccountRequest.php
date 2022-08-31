@@ -27,7 +27,7 @@ class BankaccountRequest extends FormRequest
     {
         return [
             'name'                  => 'required|string|max:255|',
-            'accountnumber'         => 'required|string|iban|max:255|unique:bankaccounts,accountnumber'  . (@$this->bankaccount->id ? ',' . $this->bankaccount->id : null),
+            'accountnumber'         => 'required|string|max:255|unique:bankaccounts,accountnumber'  . (@$this->bankaccount->id ? ',' . $this->bankaccount->id : null),
             'bankaccount_type_id'   => 'required|numeric|min:1',
         ];
     }
@@ -40,7 +40,7 @@ class BankaccountRequest extends FormRequest
     public function messages()
     {
         return [
-            'accountnumber.unique' => 'Er is al een rekeningnummer met deze naam.',
+            'accountnumber.unique' => 'Dit rekeningnummer bestaat al.',
         ];
     }
 }

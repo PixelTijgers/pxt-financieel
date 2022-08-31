@@ -10,6 +10,7 @@ use Yajra\DataTables\Html\Builder;
 
 // Models.
 use App\Models\Bankaccount;
+use App\Models\AdministratorBankaccount;
 
 // Request
 use App\Http\Requests\BankaccountRequest;
@@ -40,6 +41,12 @@ class BankaccountController extends Controller
             ->editColumn('balance', function(Bankaccount $bankaccount) {
                 return '€ ' . number_format($bankaccount->balance, 2, ',', '.');
             })
+            ->editColumn('is_shared', function(Bankaccount $bankaccount) {
+                if($bankaccount->is_shared === 1)
+                    return '<span class="badge bg-success d-block"><i class="fas fa-check"></i></span>';
+                else
+                    return '<span class="badge bg-danger d-block"><i class="fas fa-times"></i></span>';
+            })
             ->addColumn('action', function (Bankaccount $bankaccount) {
                 return
                     '<div class="d-flex">' .
@@ -48,6 +55,10 @@ class BankaccountController extends Controller
                         $this->setAction('bankaccount.destroy', $bankaccount, 'destroy', 'bankaccounts') .
                     '</div>';
             })
+            ->rawColumns([
+                'is_shared',
+                'action'
+            ])
             ->make(true);
         }
 
@@ -68,6 +79,11 @@ class BankaccountController extends Controller
                     ->addColumn([
                         'title' => __('Balance'),
                         'data' => 'balance'
+                    ])
+                    ->addColumn([
+                        'title' => 'Gedeelde rekening',
+                        'data' => 'is_shared',
+                        'width' => 40
                     ])
                     ->addAction([
                         'title' => __('Actions'),
@@ -102,7 +118,12 @@ class BankaccountController extends Controller
     public function store(BankaccountRequest $request)
     {
         // Post data to database.
-        Bankaccount::Create($request->validated());
+        $bankaccount = Bankaccount::Create([
+            'is_shared' => ($request->is_shared == 1 ? $request->is_shared : 0)
+        ] + $request->validated());
+
+        // Insert into pivot.
+        $this->setAdminBankAccounts($request, $bankaccount);
 
         // Return back with message.
         return redirect()->route('bankaccount.index')->with([
@@ -134,10 +155,16 @@ class BankaccountController extends Controller
     public function update(BankaccountRequest $request, Bankaccount $bankaccount)
     {
         // Set data to save into database.
-        $bankaccount->update($request->validated());
+        $bankaccount->update([
+            'is_shared' => ($request->is_shared == 1 ? $request->is_shared : 0)
+        ] + $request->validated());
 
         // Save data.
         $bankaccount->save();
+
+        // Delete the pivot and add the new ones.
+        AdministratorBankaccount::where('bankaccount_id', $bankaccount->id)->delete();
+        $this->setAdminBankAccounts($request, $bankaccount);
 
         // Return back with message.
         return redirect()->route('bankaccount.index')->with([
@@ -145,6 +172,35 @@ class BankaccountController extends Controller
                 'message' => __('Alert Edit')
             ]
         );
+    }
+
+    private function setAdminBankAccounts($request, $bankaccount)
+    {
+        // Delete and reset the pivot table.
+        if((int) $request->is_shared == 1)
+        {
+            $administratorBankaccounts = [
+                [
+                    'admin_id' => 1,
+                    'bankaccount_id' => $bankaccount->id
+                ],
+                [
+                    'admin_id' => 2,
+                    'bankaccount_id' => $bankaccount->id
+                ]
+            ];
+
+            foreach($administratorBankaccounts as $administratorBankaccount)
+                AdministratorBankaccount::create($administratorBankaccount);
+        }
+        else
+        {
+            AdministratorBankaccount::create(
+            [
+                'admin_id' => auth()->user()->id,
+                'bankaccount_id' => $bankaccount->id
+            ]);
+        }
     }
 
     /**
