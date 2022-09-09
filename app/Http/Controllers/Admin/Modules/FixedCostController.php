@@ -9,6 +9,8 @@ use Yajra\Datatables\Datatables;
 use Yajra\DataTables\Html\Builder;
 
 // Models.
+use App\Models\AdministratorFixedCost;
+use App\Models\FiscalYear;
 use App\Models\FixedCost;
 
 // Request
@@ -36,13 +38,16 @@ class FixedCostController extends Controller
     {
         // Init datatables.
         if (request()->ajax()) {
-            return DataTables::of(FixedCost::query())
+            return DataTables::of(FixedCost::query()->with(['bankaccount', 'category', 'company'])->select('fixed_costs.*'))
+            ->editColumn('cost', function(FixedCost $fixed_cost) {
+                return '€ ' . number_format($fixed_cost->cost, 2, ',', '.');
+            })
             ->addColumn('action', function (FixedCost $fixed_cost) {
                 return
                     '<div class="d-flex">' .
-                        $this->setAction('fixedcost.index', $fixed_cost, 'view', 'fixed_costs', false) .
-                        $this->setAction('fixedcost.edit', $fixed_cost, 'update', 'fixed_costs') .
-                        $this->setAction('fixedcost.destroy', $fixed_cost, 'destroy', 'fixed_costs') .
+                        $this->setAction('fixedcost.index', $fixed_cost, 'view', 'fixed-costs', false) .
+                        $this->setAction('fixedcost.edit', $fixed_cost, 'update', 'fixed-costs') .
+                        $this->setAction('fixedcost.destroy', $fixed_cost, 'destroy', 'fixed-costs') .
                     '</div>';
             })
             ->make(true);
@@ -51,8 +56,24 @@ class FixedCostController extends Controller
         // Set values.
         $html = $builder
                     ->addColumn([
-                        'title' => __('Name'),
-                        'data' => 'name'
+                        'title' => __('Bankaccount'),
+                        'data' => 'bankaccount.name'
+                    ])
+                    ->addColumn([
+                        'title' => 'Rekeningnummer',
+                        'data' => 'bankaccount.accountnumber'
+                    ])
+                    ->addColumn([
+                        'title' => __('Category'),
+                        'data' => 'category.name'
+                    ])
+                    ->addColumn([
+                        'title' => __('Company'),
+                        'data' => 'company.name'
+                    ])
+                    ->addColumn([
+                        'title' => 'Kosten',
+                        'data' => 'cost'
                     ])
                     ->addAction([
                         'title' => __('Actions'),
@@ -87,10 +108,16 @@ class FixedCostController extends Controller
     public function store(FixedCostRequest $request)
     {
         // Post data to database.
-        FixedCost::Create($request->validated());
+        $fixed_cost = FixedCost::Create([
+            'fiscal_year_id' => $this->getFiscalYear(session()->get('fiscal_year'))['id'],
+            'is_shared' => ($request->is_shared == 1 ? $request->is_shared : 0)
+        ] + $request->validated());
+
+        // Insert into pivot.
+        $this->setAdministratorFixedCost($request, $fixed_cost);
 
         // Return back with message.
-        return redirect()->route('fixedcost.index')->with([
+        return redirect()->route('fixed-cost.index')->with([
                 'type' => 'success',
                 'message' => __('Alert Add')
             ]
@@ -119,17 +146,71 @@ class FixedCostController extends Controller
     public function update(FixedCostRequest $request, FixedCost $fixed_cost)
     {
         // Set data to save into database.
-        $fixed_cost->update($request->validated());
+        $fixed_cost->update([
+            'fiscal_year_id' => $this->getFiscalYear(session()->get('fiscal_year'))['id'],
+            'is_shared' => ($request->is_shared == 1 ? $request->is_shared : 0)
+        ] + $request->validated());
 
         // Save data.
         $fixed_cost->save();
 
+        // Delete the pivot and add the new ones.
+        AdministratorFixedCost::where('fixed_cost_id', $fixed_cost->id)->delete();
+        $this->setAdministratorFixedCost($request, $fixed_cost);
+
         // Return back with message.
-        return redirect()->route('fixedcost.index')->with([
+        return redirect()->route('fixed-cost.index')->with([
                 'type' => 'success',
                 'message' => __('Alert Edit')
             ]
         );
+    }
+
+    /**
+     * Update the pivot table.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\FixedCost  $fixedCost
+     * @return \Illuminate\Http\Response
+     */
+    private function setAdministratorFixedCost($request, $fixedCost)
+    {
+        // Delete and reset the pivot table.
+        if((int) $request->is_shared == 1)
+        {
+            $administratorFixedCosts = [
+                [
+                    'admin_id' => 1,
+                    'fixed_cost_id' => $fixedCost->id
+                ],
+                [
+                    'admin_id' => 2,
+                    'fixed_cost_id' => $fixedCost->id
+                ]
+            ];
+
+            foreach($administratorFixedCosts as $administratorFixedCost)
+                AdministratorFixedCost::create($administratorFixedCost);
+        }
+        else
+        {
+            AdministratorFixedCost::create(
+            [
+                'admin_id' => auth()->user()->id,
+                'fixed_cost_id' => $fixedCost->id
+            ]);
+        }
+    }
+
+    /**
+     * Get the fiscal year.
+     *
+     * @param  \App\Models\FixedCost  $fixedCost
+     * @return \Illuminate\Http\Response
+     */
+    private function getFiscalYear($fixedCost)
+    {
+        return FiscalYear::where('year', $fixedCost)->first();
     }
 
     /**

@@ -117,10 +117,10 @@ Route::middleware(['auth:sanctum', 'verified', 'admin.permission'])->prefix('adm
 
         // Init payment route(s).
         Route::resource('payments', PaymentController::class, ['names' => 'payment']);
-        Route::resource('payment-types', PaymentTypeController::class, ['names' => 'payment-types']);
+        Route::resource('payment-types', PaymentTypeController::class, ['names' => 'payment-type']);
 
         // Init fixed costs route(s).
-        Route::resource('fixed-costs', FixedCostController::class, ['names' => 'fixed-costs']);
+        Route::resource('fixed-costs', FixedCostController::class, ['names' => 'fixed-cost']);
 
         // Init company route(s).
         Route::resource('companies', CompanyController::class, ['names' => 'company']);

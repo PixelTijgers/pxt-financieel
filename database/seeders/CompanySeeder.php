@@ -53,6 +53,9 @@ class CompanySeeder extends Seeder
             [
                 'name' => 'Engie',
             ],
+            [
+                'name' => 'Simyo',
+            ]
         ];
 
         foreach($companies as $company)

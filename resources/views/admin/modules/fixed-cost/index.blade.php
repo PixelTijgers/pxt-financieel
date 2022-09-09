@@ -51,7 +51,7 @@
 
                                 <div class="col-md-12 d-flex justify-content-end mb-4">
 
-                                    <a href="{{ route('payment-types.create') }}" class="btn btn-primary">{{ __('Fixed Cost') }} {{ strtolower(__('Add')) }}</a>
+                                    <a href="{{ route('fixed-cost.create') }}" class="btn btn-primary">{{ __('Fixed Cost') }} {{ strtolower(__('Add')) }}</a>
 
                                 </div>
 

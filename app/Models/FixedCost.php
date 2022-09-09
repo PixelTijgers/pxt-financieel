@@ -27,7 +27,7 @@ class FixedCost extends Model
      */
     protected static function booted()
     {
-        return static::addGlobalScope(new AdministratorPaymentScope);
+        return static::addGlobalScope(new AdministratorFixedCostScope);
     }
 
     /**
@@ -37,10 +37,12 @@ class FixedCost extends Model
      */
     protected $fillable = [
         'fiscal_year_id',
+        'bankaccount_id',
         'category_id',
         'company_id',
-        'balance',
-        'payment_date',
+        'is_shared',
+        // 'name',
+        'cost',
     ];
 
     /**
@@ -50,10 +52,11 @@ class FixedCost extends Model
      */
     protected $casts = [
         'fiscal_year_id' => 'integer',
+        'bankaccount_id' => 'integer',
         'category_id' => 'integer',
         'company_id' => 'integer',
-        'balance' => 'float',
-        'payment_date' => 'datetime',
+        'cost' => 'float',
+        'is_shared' => 'boolean',
     ];
 
     /**
@@ -62,7 +65,6 @@ class FixedCost extends Model
      * @var array
      */
     protected $dates = [
-        'payment_date',
         'created_at',
         'updated_at',
     ];
@@ -84,6 +86,11 @@ class FixedCost extends Model
     public function company()
     {
         return $this->belongsTo(\App\Models\Company::class);
+    }
+
+    public function bankaccount()
+    {
+        return $this->belongsTo(\App\Models\Bankaccount::class);
     }
 
     public function administrator_fixed_cost()

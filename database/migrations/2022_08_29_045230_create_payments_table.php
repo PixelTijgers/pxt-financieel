@@ -32,6 +32,7 @@ return new class extends Migration
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
 
             // Table content.
+            $table->string('name');
             $table->decimal('balance', 9, 3)->default(0);
             $table->string('payment_reference')->nullable()->unique();
             $table->date('payment_date');

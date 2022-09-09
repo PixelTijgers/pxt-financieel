@@ -21,6 +21,11 @@ class Bankaccount extends Model
     use HasRoles;
 
     /**
+     * The attributes that should be hidden for arrays.
+     */
+     protected $hidden = ['id'];
+
+    /**
      * The "booted" method of the model.
      *
      * @return void
@@ -51,7 +56,7 @@ class Bankaccount extends Model
     protected $casts = [
         'bankaccount_types_id' => 'integer',
         'balance' => 'float',
-        'is_shared' => 'integer',
+        'is_shared' => 'boolean'
     ];
 
     /**

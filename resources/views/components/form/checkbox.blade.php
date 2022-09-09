@@ -25,7 +25,7 @@
                         class="form-check-input {{ @$class }} @error($name) border-danger @enderror"
                         value="{{ $key }}"
                         @if($name === 'is_shared')
-                            @if($values === 1)
+                            @if($values == 1)
                                 {{ 'checked' }}
                             @endif
                         @else

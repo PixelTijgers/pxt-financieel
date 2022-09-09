@@ -60,9 +60,6 @@ class CategorySeeder extends Seeder
                 'name' => 'Overboeking tussen rekeningen',
             ],
             [
-                'name' => 'Hello Fresh',
-            ],
-            [
                 'name' => 'Benzine',
             ],
             [
